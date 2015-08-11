@@ -1,7 +1,7 @@
 # GetSimple Proposal Plugin Specification
 This is a proposal specification for how plugin development could eventually look in
 a later version of the GetSimple CMS. This is not a repository of usable code, but
-a sketch of a possible API for plugin development.
+a sketch of a possible core API for plugin development.
 
 # Aims
 * Encapsulate the plugin's environment in a sandbox
@@ -12,4 +12,12 @@ a sketch of a possible API for plugin development.
 * Provide a simpler interface for accessing GetSimple site data (e.g. settings)
 
 # Plugin Structure
-[todo]
+```
+- plugin_name/
+  - plugin_name/manifest.json
+  - plugin_name/index.php
+```
+
+## `[plugin_name]`
+## `[plugin_name]/manifest.json`
+## `[plugin_name]/index.php`
