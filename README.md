@@ -3,6 +3,10 @@ This is a proposal specification for how plugin development could eventually loo
 a later version of the GetSimple CMS. This is not a repository of usable code, but
 a sketch of a possible core API for plugin development.
 
+* [Aims](#aims)
+* [Plugin Structure](#plugin-structure)
+* [API](#api)
+
 # Aims
 * Encapsulate the plugin's environment in a sandbox
 * Reduce the usage of global variables
@@ -14,10 +18,13 @@ a sketch of a possible core API for plugin development.
 # Plugin Structure
 ```
 - plugin_name/
-  - plugin_name/manifest.json
-  - plugin_name/index.php
-  - plugin_name/admin.php
+  - lang/
+    - .htaccess                     "Deny from all"
+    - en_US.json
   - .htaccess                       "Deny from all"
+  - manifest.json
+  - index.php
+  - admin.php
 ```
 
 ## `plugin_name/`
@@ -89,4 +96,66 @@ Code that will be executed on in the administration panel.
 <h3><?php echo $plugin->i18n('PLUGIN_TITLE'); ?></h3>
 
 <p><?php echo $plugin->i18n('ADMIN_MESSAGE'); ?></p>
+```
+
+# API
+## `Plugin`
+The `Plugin` class encapsulates some helpful methods for plugin developers.
+
+### `i18n(string $hash)`
+Internationalized string in accordance with the hashes defined in the lang/ directory.
+
+```php
+echo $plugin->i18n('PLUGIN_TITLE');
+```
+
+### `hook(string $name, function $callback)`
+Registers a hook.
+
+```php
+$plugin->hook('common', function() {
+  echo 'All plugins have loaded at this point!';
+});
+```
+
+### `trigger(string $name, array $arguments)`
+Trigger a hook. Used for communicating between plugins.
+
+```php
+// Some other plugin has the following code to register a hook:
+// $plugin->hook('some-custom-hook', function(/* */) { /* */ });
+// To execute it, run:
+$plugin->trigger('some-custom-hook', $args = array(/* */));
+```
+
+### `filter(string $name, function $callback)`
+Register a filter.
+
+```php
+$plugin->filter('content', function($content) {
+  // Do something to the page content and return it
+});
+```
+
+### `url([string $suffix])`
+URL to the admin panel for the plugin
+
+```html+php
+<!--link to admin panel-->
+<a href="<?php echo $plugin->url(); ?>">
+  ...
+</a>
+
+<!--link to a page in the admin panel-->
+<a href="<?php echo $plugin->url('action=action1'); ?>">
+  ...
+</a>
+```
+
+### `path([string $suffix])`
+Canonical path to the plugin's folder
+
+```php
+// Includes the plugins/plugin_name/inc/myscript file
+include $plugin->path('inc/myscript.php');
 ```
