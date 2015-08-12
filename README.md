@@ -159,3 +159,52 @@ Canonical path to the plugin's folder
 // Includes the plugins/plugin_name/inc/myscript file
 include $plugin->path('inc/myscript.php');
 ```
+
+## `FileJSON`
+
+The `FileJSON` class handles data manipulation (through JSON files).
+
+### `__construct()`
+
+```php
+$file = new FileJSON(GSDATAOTHERPATH . '/datum');
+```
+
+### `exists()`
+
+```php
+if (!$file->exists()) {
+  // ...
+}
+```
+
+### `save()`
+Save data to the file.
+
+```php
+$file->save(array(
+  'title'   => 'Title',
+  'content' => 'Page content',
+  'pubdate' => time(),
+));
+```
+
+### `get()`
+Get data from the file
+
+```php
+$data = $file->get();
+echo $data['title'];
+```
+
+### `move()`
+
+```php
+$file->move('somethingelse.json');
+```
+
+### `delete()`
+
+```php
+$file->delete();
+```
