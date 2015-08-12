@@ -86,6 +86,12 @@ $plugin->filter('content', function($content) {
 
 // Trigger a hook
 $plugin->trigger('some-hook', $args = array());
+
+// Create an administration panel
+$plugin->admin(function() {
+  echo '<h3>' . $plugin->i18n('PLUGIN_TITLE') . '</h3>';
+  echo '<p>' . $plugin->i18n('ADMIN_MESSAGE') . '</p>';
+});
 ```
 
 ## `plugin_name/admin.php`
@@ -134,6 +140,31 @@ Register a filter.
 ```php
 $plugin->filter('content', function($content) {
   // Do something to the page content and return it
+});
+```
+
+### `admin(function $callback)`
+Registers function that will be executed on the admin panel
+
+```php
+$plugin->admin(function() {
+  // Your admin panel
+});
+```
+
+### `admin(mixed $pattern, function $callback)`
+Registers function that will be executed on the admin panel when the
+url matches the `$pattern`.
+
+```php
+$plugin->admin(array('', false), function() {
+  // Main admin panel page
+  // Also executes when no other admin page can be found
+});
+
+$plugin->admin('/action=edit&slug=[a-zA-Z0-9]*/', function($slug) {
+  // Executes when url is ?id=plugin_name&action=edit&slug=some-slug
+  // The matches in the regex are passed to the function's parameters
 });
 ```
 
