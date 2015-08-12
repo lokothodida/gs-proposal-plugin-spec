@@ -198,7 +198,7 @@ The `FileJSON` class handles data manipulation (through JSON files).
 ### `__construct()`
 
 ```php
-$file = new FileJSON(GSDATAOTHERPATH . '/datum');
+$file = new FileJSON(GSDATAOTHERPATH . '/datum.json');
 ```
 
 ### `exists()`
