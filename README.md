@@ -24,7 +24,6 @@ a sketch of a possible core API for plugin development.
   - .htaccess                       "Deny from all"
   - manifest.json
   - index.php
-  - admin.php
 ```
 
 ## `plugin_name/`
@@ -45,7 +44,6 @@ author. Plugin registration will use the data from this manifest.
   "website"      : "https://yoursite.com",  // Author website
   "default_lang" : "en_US",                 // Default language
   "main"         : "index.php"
-  "admin"        : "admin.php",             // Script to run for the admin panel
   "description"  : "i18n.PLUGIN_DESC",
   "tab"          : "pages",
   "dependencies" : [],
